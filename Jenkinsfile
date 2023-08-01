@@ -8,8 +8,19 @@ pipeline {
     }
 
     stage('List Contents of dir') {
-      steps {
-        sh 'ls -la'
+      parallel {
+        stage('List Contents of dir') {
+          steps {
+            sh 'ls -la'
+          }
+        }
+
+        stage('Frontend Unit Test') {
+          steps {
+            sh 'npm i && npm run test'
+          }
+        }
+
       }
     }
 
